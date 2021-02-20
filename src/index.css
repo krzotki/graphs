@@ -1,3 +1,16 @@
-body {
-    
+#canvas {
+    width: 800px;
+    height: 600px;
+    border: solid black 1px;
+    box-sizing: border-box;
+}
+
+.circle {
+    position: absolute;
+    background-color: red;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
 }
