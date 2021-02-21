@@ -3,14 +3,37 @@
     height: 600px;
     border: solid black 1px;
     box-sizing: border-box;
+    position: relative;
 }
 
 .circle {
     position: absolute;
-    background-color: red;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
+    z-index: 1;
+    user-select: none;
+}
+
+.circle:hover {
+    cursor: pointer;
+    box-shadow: 0px 2px 3px 0px black;
+}
+
+.circle.red {
+    background-color: red;
+}
+
+.circle.blue {
+    background-color: blue;
+}
+
+.weight {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    z-index: 2;
 }
