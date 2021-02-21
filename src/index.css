@@ -1,9 +1,18 @@
+#container, body {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;;
+}
+
 #canvas {
     width: 800px;
     height: 600px;
     border: solid black 1px;
     box-sizing: border-box;
-    position: relative;
+    position: absolute;
 }
 
 .circle {
@@ -36,4 +45,22 @@
     height: 20px;
     background-color: white;
     z-index: 2;
+}
+
+#matrix {
+    position: absolute;
+    left: 800px;
+}
+
+table {
+    text-align: center;
+}
+
+table td {
+    padding: 5px;
+}
+
+table tbody tr:first-child td,
+table tbody tr td:first-child {
+    background-color: #aaaaaa;;
 }

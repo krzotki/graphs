@@ -4,24 +4,7 @@ import LineTo, { Line } from 'react-lineto';
 import './index.css';
 import Circle from './circle.js';
 import Matrix from './matrix.js';
-
-function WeightInput(props) {
-
-    let style = {
-        left: props.position.x - 10, //half of the dimension
-        top: props.position.y - 10
-    };
-
-    return (
-        <input 
-            className = 'weight' 
-            value = {props.value}
-            style = {style}
-            onClick = {(evt) => props.onClick(evt)}
-            onChange = {(evt) => props.onChange(evt)}
-        />
-    );
-}
+import WeightInput from './weightInput.js';
 
 class Sketch extends React.Component {
 
@@ -105,7 +88,7 @@ class Sketch extends React.Component {
                     {circlesToRender}
                     {inputsToRender}
                </div>
-               <Matrix circles = {circles}></Matrix>
+               <Matrix weights = {current.weights}></Matrix>
             </div>
         );
     }
@@ -118,29 +101,33 @@ class Sketch extends React.Component {
         const lines = current.lines.slice();
         const weights = current.weights.slice();
 
-        if(selectedCircles.includes(index)) {
-            delete selectedCircles[index];
-        }
 
-        selectedCircles.push(index);
+        if(selectedCircles[0] !== index) {
+            selectedCircles.push(index);
+        } else {
+            selectedCircles.pop();
+        }
 
         if(selectedCircles.length === 2) {
             let from = selectedCircles[0];
             let to = selectedCircles[1];
 
-            lines.push({
-                from: from,
-                to: to,
-            });
-
-            const fromRow = weights[from].slice();    
-            fromRow[to] = 1;
-            weights[from] = fromRow;
-
-            const toRow = weights[to].slice();
-            toRow[from] = 1;
-            weights[to] = toRow;
-
+            if(lines.filter(line => (line.from === from && line.to === to) || (line.from === to && line.to === from)).length === 0)
+            {
+                lines.push({
+                    from: from,
+                    to: to,
+                });
+    
+                const fromRow = weights[from].slice();    
+                fromRow[to] = 1;
+                weights[from] = fromRow;
+    
+                const toRow = weights[to].slice();
+                toRow[from] = 1;
+                weights[to] = toRow;
+            }
+               
             selectedCircles.pop();
             selectedCircles.pop();
         }
@@ -189,8 +176,6 @@ class Sketch extends React.Component {
         this.setState({
             history: history.concat([newHistoryItem]),
         });
-
-        console.table(weights)
     }
 
     handleClick(evt) {
@@ -199,9 +184,11 @@ class Sketch extends React.Component {
         const circles = current.circles.slice();
         const weights = current.weights.slice();
 
+        console.log(evt)
+
         circles.push({
-            x: evt.clientX,
-            y: evt.clientY,
+            x: evt.pageX,
+            y: evt.pageY,
             radius: 20
         });
 
