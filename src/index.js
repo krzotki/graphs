@@ -18,7 +18,7 @@ class Sketch extends React.Component {
                 ],
 
                 circles: [
-                    dupa
+                    
                 ],
 
                 lines: [
