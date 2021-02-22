@@ -5,6 +5,7 @@ import './index.css';
 import Circle from './circle.js';
 import Matrix from './matrix.js';
 import WeightInput from './weightInput.js';
+import Djikstra from './dijkstra';
 
 class Sketch extends React.Component {
 
@@ -13,11 +14,11 @@ class Sketch extends React.Component {
         this.state = {
             history: [{
                 selectedCircles: [
-
+                    
                 ],
 
                 circles: [
-                   
+                    dupa
                 ],
 
                 lines: [
@@ -25,6 +26,10 @@ class Sketch extends React.Component {
                 ],
 
                 weights: [
+
+                ],
+
+                path: [
 
                 ],
             }],
@@ -37,10 +42,12 @@ class Sketch extends React.Component {
         const current = history[history.length - 1];
         const circles = current.circles.slice();
         const lines = current.lines.slice();
+        const path = current.path.slice();
 
         let circlesToRender = [];
         let linesToRender = [];
         let inputsToRender = [];
+        let pathLinesToRender = [];
 
         for(let i = 0; i < circles.length; i++) {
             let selected = current.selectedCircles.includes(i);
@@ -81,16 +88,64 @@ class Sketch extends React.Component {
             );
         }
 
+        for(let j = 0; j < path.length; j++) {
+            let from = path[j].from;
+            let to = path[j].to;
+
+            if(from === to) continue;
+            pathLinesToRender.push(
+                <LineTo 
+                    borderColor = 'purple'
+                    borderWidth = {3} 
+                    zIndex = {0} 
+                    key = {'line' + from + "-" + to} 
+                    from = {"circle " + from}
+                    to = {"circle " + to}>
+                </LineTo>
+            );
+        }
+
         return(
             <div id = 'container'>
                 <div id = 'canvas' onClick = {(evt)=> this.handleClick(evt)} onContextMenu = {(evt) => this.handleRightClick(evt)}>
                     {linesToRender}
                     {circlesToRender}
                     {inputsToRender}
+                    {pathLinesToRender}
                </div>
                <Matrix weights = {current.weights}></Matrix>
+               <button className = 'solve' onClick = {(evt) => this.findShortestPath(evt, current.weights)}>Find shortest path</button>
             </div>
         );
+    }
+
+    findShortestPath(evt, weights) {
+        let result = Djikstra(weights, 0);
+
+        const history = this.state.history;
+        const current = history[history.length - 1];
+        const path = current.path.slice();
+
+        while(path.length > 0) path.pop();
+
+        let index = weights.length - 1;
+
+        do {
+            path.push({
+                from: index,
+                to: result[index]
+            });
+
+            index = path[path.length - 1].to;
+
+        } while(index > -1)
+
+        let newHistoryItem = {...current};
+        newHistoryItem.path = path;
+
+        this.setState({
+            history: history.concat([newHistoryItem]),
+        });
     }
 
     handleCircleClick(evt, index) {

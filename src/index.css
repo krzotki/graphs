@@ -64,3 +64,8 @@ table tbody tr:first-child td,
 table tbody tr td:first-child {
     background-color: #aaaaaa;;
 }
+
+button.solve {
+    position: absolute;
+    top: 600px;
+}
