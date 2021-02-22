@@ -5,7 +5,7 @@ import './index.css';
 import Circle from './circle.js';
 import Matrix from './matrix.js';
 import WeightInput from './weightInput.js';
-import Djikstra from './dijkstra';
+import Dijkstra from './dijkstra';
 
 class Sketch extends React.Component {
 
@@ -120,7 +120,7 @@ class Sketch extends React.Component {
     }
 
     findShortestPath(evt, weights) {
-        let result = Djikstra(weights, 0);
+        let result = Dijkstra(weights, 0);
 
         const history = this.state.history;
         const current = history[history.length - 1];

@@ -1,4 +1,4 @@
-function Djikstra(matrix, start) {
+function Dijkstra(matrix, start) {
     let v = start;
     
     let Q = Array(matrix.length).fill(false);
@@ -35,4 +35,4 @@ function Djikstra(matrix, start) {
     return p;
 }
 
-export default Djikstra;
+export default Dijkstra;
