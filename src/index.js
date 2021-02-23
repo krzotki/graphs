@@ -184,6 +184,7 @@ class Sketch extends React.Component {
                
             selectedCircles.pop();
             selectedCircles.pop();
+
             
         }
 
