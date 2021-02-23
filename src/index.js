@@ -156,7 +156,6 @@ class Sketch extends React.Component {
         const lines = current.lines.slice();
         const weights = current.weights.slice();
 
-
         if(selectedCircles[0] !== index) {
             selectedCircles.push(index);
         } else {
@@ -185,6 +184,7 @@ class Sketch extends React.Component {
                
             selectedCircles.pop();
             selectedCircles.pop();
+            
         }
 
         let newHistoryItem = {...current};
@@ -238,8 +238,6 @@ class Sketch extends React.Component {
         const current = history[history.length - 1];
         const circles = current.circles.slice();
         const weights = current.weights.slice();
-
-        console.log(evt)
 
         circles.push({
             x: evt.pageX,
