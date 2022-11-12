@@ -11,7 +11,7 @@
 #canvas {
     width: 800px;
     height: 600px;
-    border: solid black 1px;
+    border: solid rgb(66, 66, 66) 1px;
     box-sizing: border-box;
     position: absolute;
 }
